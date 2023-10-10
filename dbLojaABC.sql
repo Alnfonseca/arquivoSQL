@@ -50,3 +50,4 @@ update tbFuncionarios set nome = @nome, email = @email, cpf = @cpf, dNasc = @dNa
 -- excluindo Funcionarios
 delete from tbFuncionarios where codFunc = @codFunc;
 
+select usu.usuario, usu.senha, func.codFunc from tbFuncionarios as func inner join tbUsuarios as usu on func.codFunc = usu.codFunc where nome = 'Roberto';
