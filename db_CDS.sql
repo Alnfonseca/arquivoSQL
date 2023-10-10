@@ -80,7 +80,8 @@ nome_cd varchar(50) not null unique,
 val_cd decimal(9,2) not null check( val_cd >= 0),
 qntd_estq int not null check(qntd_estq >= 0),
 primary key (cod_tit),
-foreign key (cod_cat) references tb_categorias(cod_cat)
+foreign key (cod_cat) references tb_categorias(cod_cat),
+foreign key (cod_grav) references tb_gravadoras(cod_grav)
 );
 
 create table tb_pedidos(
@@ -242,3 +243,32 @@ select * from tb_titulos;
 select * from tb_pedidos;
 select * from tb_tit_artistas;
 select * from tb_tit_pedidos;
+
+-- 1. Selecione o nome dos CDs e o nome da gravadora de cada CD. 
+select tit.nome_cd as 'nome do cd', nome_grav as 'nome da gravadora' from tb_titulos as tit
+inner join tb_gravadoras as grav on tit.cod_tit = tit.cod_grav;
+
+-- 2. Selecione o nome dos CDs e o nome da categoria de cada CD.
+select tit.nome_cd as 'nome do cd', cat.nome_cat as 'nome da categoria' from tb_titulos as tit
+inner join tb_categorias as cat on tit.cod_tit = tit.cod_grav; 
+
+-- 3. Selecione o nome dos CDs, o nome das gravadoras de cada CD e o nome da categoria de 
+-- cada CD.
+select tit.nome_cd as 'nome dos cds', grav.nome_grav as 'nome da gravadora', cat.nome_cat as 'nome da categoria' from tb_titulos as tit
+inner join tb_gravadoras as grav on tit.cod_tit = tit.cod_grav
+inner join tb_categorias as cat on tit.cod_tit = tit.cod_cat;
+
+-- 4. Selecione o nome dos clientes e os títulos dos CDs vendidos em cada pedido que o 
+-- cliente fez. 
+select cli.nome_cli as 'nome do cliente', tit.nome_cd as 'nome do cd', ped.num_ped as 'numero de pedido' from tb_tit_pedidos as tit_ped
+left join tb_clientes as cli on tit_ped.cod_tit = tit.cod_cli
+left join tb_titulos as tit on  = cod_tit = cod_tit
+left join tb_pedidos as ped on  = ped.num_ped;
+
+
+-- 5. Selecione o nome do funcionário, número, data e valor dos pedidos que este 
+-- funcionário registrou, além do nome do cliente que está fazendo o pedido. 
+
+select nome_func as 'nome do funcionario', num_ped as 'numero do pedido', data_ped as 'data do pedido', val_ped as 'valor do pedido', nome_cli as 'nome do cliente' from tb_pedidos as ped
+inner join tb_funcionarios as func on cod_tit = codfunc
+inner join tb_clientes as cli on cod_tit = cod_cli

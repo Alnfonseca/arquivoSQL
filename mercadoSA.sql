@@ -75,10 +75,81 @@ insert into tbprodutos(descricao,dataEntrada,horaEntrada,quantidade,valorunit,co
 insert into tbprodutos(descricao,dataEntrada,horaEntrada,quantidade,valorunit,codforn) values ("Bicicleta","2023/08/06","12:34",80,850,1);
 insert into tbvendas(codusu,codcli,codprod,datavenda,quantidade,valortotal) values (1,1,2,"2023/08/10",10,50.00);
 insert into tbvendas(codusu,codcli,codprod,datavenda,quantidade,valortotal) values (1,2,1,"2023/08/10",20,30.00);
-insert into tbvendas(codusu,codcli,codprod,datavenda,quantidade,valortotal) values (1,2,1,"2023/08/09",20,30.00);
+insert into tbvendas(codusu,codcli,codprod,datavenda,quantidade,valortotal) values (1,2,1,"2023/08/09",20,10.00);
 select * from tbfuncionarios;
 select * from tbClientes;
 select * from tbfornecedores;
 select * from tbusuarios;
 select * from tbprodutos;
 select * from tbvendas;
+
+-- inner join 
+select usu.nome as 'Nome do Usuário',
+func.nome as 'Nome do Funcionário',
+func.email as 'E-mail do Fucnionario'
+from tbusuarios as usu
+inner join tbfuncionarios as func
+on usu.codfunc = func.codfunc;
+
+select forn.nome, forn.nome, forn.cnpj, prod.descricao
+from tbprodutos as prod
+inner join tbfornecedores as forn
+on prod.codforn = forn.codforn;
+
+-- perguntando para a tabela vendas o nome, email, telcel da tabela do cliente e datavenda, valor total da tabela de vendas; 
+select cli.nome, cli.email, cli.telcel, vend.datavenda, vend.valortotal 
+from tbClientes as cli
+inner join tbvendas as vend
+on vend.codcli = cli.codcli;
+
+-- perguntando para a tabela vendas sobre as tabelas cliente e produto;
+select cli.nome, cli.email, prod.descricao, vend.datavenda 
+from tbvendas as vend
+inner join tbClientes as cli
+on vend.codcli = cli.codcli
+inner join tbprodutos as prod
+on vend.codprod = prod.codprod;
+
+--  selecionando com palavras que tem a letra "b"
+select cli.nome, cli.email, prod.descricao, vend.datavenda 
+from tbvendas as vend
+inner join tbClientes as cli
+on vend.codcli = cli.codcli
+inner join tbprodutos as prod
+on vend.codprod = prod.codprod
+where prod.descricao like '%b%';
+
+-- selecionando tudo que esta no codigo 1
+
+
+select usu.nome,func.nome,vend.datavenda, vend.quantidade, vend.valortotal
+  from tbusuarios as usu
+  inner join tbfuncionarios as func
+  on usu.nome = func.nome
+  inner join tbvendas as vend
+  on usu.codusu = vend.codusu;
+
+
+  select func.nome as 'func', usu.nome as 'usu', vend.dataVenda, vend.valortotal, prod.descricao, .prod.dataEntrada, forn.nome as 'forn', forn.cnpj
+  from tbfuncionarios as func
+  inner join tbusuarios as usu
+  on usu.codfunc = func.codfunc
+inner join tbvendas as vend
+on usu.codusu = vend.codusu
+inner join tbprodutos as prod
+on vend.codprod = prod.codprod
+inner join tbfornecedores as forn
+on prod.codforn = forn.codforn;
+
+-- Perguntar para a tabela funcionario quais os produtos cadastrados
+-- left
+select prod.descricao, prod.quantidade from tbfuncionarios as func
+left join tbprodutos as prod on func.codfunc = prod.codprod;
+
+-- right
+select prod.descricao, prod.quantidade from tbfuncionarios as func
+right join tbprodutos as prod on func.codfunc = prod.codprod;
+
+-- inner
+select prod.descricao, prod.quantidade from tbfuncionarios as func
+inner join tbprodutos as prod on func.codfunc = prod.codprod;
