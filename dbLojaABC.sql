@@ -47,7 +47,12 @@ from * tbFuncionarios where nome = "@nome";
 -- Alterar Funcionários
 update tbFuncionarios set nome = @nome, email = @email, cpf = @cpf, dNasc = @dNasc, endereco = @endereco, cep = @cep, numero = @numero, bairro = @bairro, estado = @estado, cidade = @cidade where codFunc = @codFunc;
 
+-- Alterar usuarios
+-- update into tbUsuarios set usuario = @usuario, senha = @senha where codUsu = @codUsu;
+
 -- excluindo Funcionarios
 delete from tbFuncionarios where codFunc = @codFunc;
 
 select usu.usuario, usu.senha, func.codFunc from tbFuncionarios as func inner join tbUsuarios as usu on func.codFunc = usu.codFunc where nome = 'Roberto';
+
+select codFunc from tbFuncionarios where nome = @nome;
