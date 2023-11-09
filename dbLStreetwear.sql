@@ -37,6 +37,7 @@ foreign key	(codUsu) references tbLogin (codUsu)
 create table tbAvaliacoes(
 codFunc int not null auto_increment,
 nome varchar(100) not null,
+dataCompra date not null,
 qualidadeAtend char(10) not null,
 valorComiss int not null,
 valorTotal int not null,
@@ -53,3 +54,7 @@ foreign key (codFunc) references tbFuncionarios (codFunc)
 -- update set nomeProd = @nomeProd, marcaProd = @marcaProd, quant = @quant, tamanho = @tamanho, dataRep = @dataRep, preco = @preco, codUsu = @codUsu where codUsu = @codUsu;
 
 -- select codUsu from tbProdutos where codProd = @codProd;
+
+-- insert into tbAvaliacoes (codFunc, nome, qualidadeAtend, valorComiss, valortotal) values (@codFunc, @nome, @qualidadeAtend, @valorComiss, @valortotal);	
+
+insert into tbFuncionarios (nome, email, cpf, dNasc) values ("Fabricio Almeida", "fafaalmeida@@gmail.com", "538.991.836-27", "1999/10/17");
